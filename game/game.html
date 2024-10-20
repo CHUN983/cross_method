@@ -1,0 +1,276 @@
+<html>
+    <head>
+        <title>挑戰101</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <style>
+            /* 基本設定 */
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            /* flex 容器，水平排列元素 */
+            .container {
+                display: flex;
+                justify-content: space-between; /* 左右分佈 */
+                align-items: center; /* 垂直居中 */
+                padding: 20px; /* 增加容器內的距離 */
+            }
+
+            /* level 的淺藍色圓圈設計 */
+            .level {
+                width: 80px;
+                height: 80px;
+                background-color: lightblue; /* 淺藍色 */
+                border-radius: 50%; /* 圓形 */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 24px;
+                font-weight: bold;
+                color: #333;
+                position: absolute; /* 固定在左上角 */
+                top: 20px;
+                left: 20px;
+            }
+
+            /* time 的倒數計時樣式 */
+            .time {
+                font-size: 24px;
+                font-weight: bold;
+                color: #333;
+                margin-left: 150px; /* 確保它顯示在 level 右邊 */
+            }
+
+            /* goal 的樣式 */
+            .goal {
+                font-size: 20px;
+                color: #333;
+                margin-left: 20px; /* 確保它顯示在 time 左邊 */
+            }
+
+            /* hint 的樣式，包含紫色方框 */
+            .hint {
+                display: flex; /* 使用 flexbox */
+                align-items: center; /* 垂直居中對齊 */
+                font-size: 20px;
+                height: 20px;
+                color: #333;
+                border: 2px solid purple; /* 紫色邊框 */
+                border-radius: 8px; /* 方框圓角 */
+                padding: 10px; /* 內部填充，讓內容與邊框保持距離 */
+                background-color: purple; /* 方框內的背景顏色 */
+                margin-right: 20px; /* 保持右邊的距離 */
+            }
+
+            .hint i {
+                margin-right: 8px; /* 調整 icon 與文字的距離 */
+                color: white; /* icon 的顏色 */
+            }
+
+            /* home 按鈕的紫色方框樣式 */
+            .home {
+                font-size: 24px;
+                margin-right: 20px; /* 確保它顯示在最右側 */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50px;
+                height: 50px;
+                border: 2px solid purple; /* 紫色邊框 */
+                background-color: purple; /* 背景顏色 */
+                border-radius: 8px; /* 方框的圓角 */
+                cursor: pointer; /* 鼠標指針顯示為手型 */
+                transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* 加入過渡效果 */
+            }
+
+            .home:hover {
+                background-color: darkviolet; /* 鼠標懸停時改變背景色 */
+            }
+
+            .home i {
+                color: white; /* icon 顏色 */
+            }
+
+            /*for game -----------------------------------------------------------------*/
+            /* game_container 的樣式 */
+            .game_container {
+                width: 500px;
+                background-color: #ccc; /* 灰色背景 */
+                padding: 20px;
+                border-radius: 10px; /* 圓角 */
+                text-align: center;
+                display: flex;
+                justify-content: space-between; /* 左右分佈 */
+                align-items: center;
+            }
+
+            /* display_number 的樣式 */
+            .display_number {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                width: 120px;
+                font-size: 24px;
+            }
+
+            .operation {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+
+            /* 每個運算組合的樣式 */
+            .operation-group {
+                display: flex;
+                align-items: center;
+                background-image: url('arrow.png');
+                background-size: contain; /* 自適應圖片大小 */
+                background-repeat: no-repeat;
+                background-position: center; /* 背景置中 */
+                padding: 0 30px; /* 增加左右的間距，讓箭頭有空間 */
+                position: relative;
+                height: 50px; /* 設定高度 */
+            }
+            .operation-group span {
+                font-weight: bold;
+                font-size: 24px;
+                margin-right: 5px; /* 調整符號與數字間距 */
+            }
+
+
+            /* input_number 的樣式 */
+            .input_number {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                width: 150px;
+            }
+
+            .input_number button {
+                font-size: 20px;
+                width: 50px;
+                height: 50px;
+                margin: 5px;
+                background-color: white;
+                border: 2px solid #000;
+                border-radius: 5px;
+            }
+
+            /* check 的樣式 */
+            .check {
+                width: 100px;
+                height: 100px;
+                background-color: red; /* 紅色背景 */
+                border-radius: 50%; /* 圓形 */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-size: 20px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        </style>
+        <script>
+            let countdown; // 用來儲存計時器的變數
+            let timeRemaining = 10; // 計時器的初始值（60秒）
+
+            function updateTimer() {
+                const timeDisplay = document.querySelector('.time'); // 獲取顯示時間的元素
+                timeDisplay.textContent = `倒數：${timeRemaining}秒`; // 更新顯示內容
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(countdown); // 停止計時器
+                    const choice = confirm('時間到💥！要回首頁還是重新開始？\n按確定回首頁，按取消重新開始。');
+                    if (choice) {
+                        goHome(); // 回到首頁
+                    } else {
+                        restartTimer(); // 重新開始
+                    }
+                } else {
+                    timeRemaining--; // 減少剩餘時間
+                }
+            }
+
+            function startTimer() {
+                countdown = setInterval(updateTimer, 1000); // 每秒更新一次計時器
+            }
+
+            function goHome() {
+                clearInterval(countdown); // 在轉換頁面前停止計時器
+                window.location.href = '../start/main.html'; // 將當前窗口導向 main.html
+            }
+
+            function restartTimer() {
+                timeRemaining = 10; // 重設時間
+                startTimer(); // 重新啟動計時器
+            }
+
+            window.onload = function() {
+                startTimer(); // 頁面加載後啟動計時器
+            }
+        </script>
+    </head>
+
+    <body>
+        <!-- 圓圈 level 固定左上角 -->
+        <div class="level">LV8</div>
+
+        <!-- 容器，包含 time、goal、suggestion、home -->
+        <div class="container">
+            <!-- time 顯示 -->
+            <div class="time">倒數：10秒</div>
+
+            <!-- goal 顯示 -->
+            <div class="goal">
+                <p>目標: 60秒內完成</p>
+            </div>
+
+            <!-- hint 顯示 -->
+            <div class="hint">
+                <i class="fa-solid fa-lightbulb"></i>
+                <p style="color: white; font-weight: bold;">提示</p>
+            </div>
+
+            <!-- home 按鈕 -->
+            <div class="home" onclick="goHome()">
+                <i class="fa-solid fa-house"></i>
+            </div>
+        </div>
+
+        <!-- Game container 置中，包含 display_number、input_number、check -->
+        <div class="game_container">
+            <!-- 顯示的數字與運算符號 -->
+            <div class="display_number">
+                <div class="operation">
+                    <!-- 將乘法符號與12包在一個標籤內 -->
+                    <div class="operation-group">
+                        <span>x</span> 
+                        <span>12</span>
+                    </div>
+                </div>
+                <div class="operation">
+                    <!-- 將加法符號與7包在一個標籤內 -->
+                    <div class="operation-group">
+                        <span>+</span> 
+                        <span>7</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 使用者輸入按鈕 0-9 -->
+            <div class="input_number">
+
+            </div>
+
+            <!-- 確認按鈕 -->
+            <div class="check">
+                確認
+            </div>
+        </div>
+
+    </body>
+</html>

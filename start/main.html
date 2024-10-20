@@ -68,6 +68,15 @@
             text-align: center; /* 文字居中 */
             display: flex;
             align-items: center;
+            justify-content: center; /* 水平居中內容 */
+            cursor: pointer; /* 鼠標指針顯示為手型 */
+            text-decoration: none; /* 去除鏈接下劃線 */
+            color: white; /* 字體顏色 */
+        }
+
+        /* 按鈕的 hover 效果 */
+        .instruction-box:hover {
+            background-color: darkviolet; /* 當鼠標懸停時改變背景色 */
         }
         
     </style>
@@ -85,11 +94,10 @@
         <!-- 目前進度和操作教學區塊 -->
         <div class="info">
             <p>目前進度: 0樓</p>
-            <div class="instruction-box">
+            <a href="../game/game.html" class="instruction-box">
                 <i class="fa-solid fa-play" style="color: white; padding: 5px;"></i>
                 <p style="color: white; font-weight: bolder;"> 直接開始 </p>
-            </div>
-            <p>請按我!</p>
+            </a>
         </div>
 
         <!-- 星星和進度顯示 -->
