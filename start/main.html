@@ -1,0 +1,102 @@
+<html>
+    <head>
+        <title>挑戰101</title>
+        <meta charset="UTF-8">
+    </head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .box {
+            width: 200px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0; /* 可以改變背景色 */
+            border-style: double;
+            position: relative;
+            left: 50%;
+            top: 15%;
+            transform: translateX(-50%);
+        }
+
+        .box p {
+            color: rgb(143, 22, 22); /* 設定字體顏色為紅色 */
+            font-size: 50px; /* 設定字體大小 */
+            font-weight: bold; /* 字體加粗 */
+            
+        }
+
+        .star-container {
+            font-size: 24px; /* 調整整個區塊的大小 */
+            color: gold; /* 設定星星的顏色 */
+            display: flex;
+            align-items: center; /* 垂直置中星星和文字 */
+            text-align: center;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%); /* 確保居中對齊 */
+            margin-top: 20px; /* 與 info 之間增加垂直距離 */
+            justify-content: center; /* 水平居中星星和文字 */
+        }
+
+        .star-container p {
+            margin-left: 8px; /* 調整星星和文字之間的距離 */
+            font-size: 24px; /* 調整文字大小 */
+            color: black; /* 文字顏色 */
+        }
+
+        /* 調整新區塊的樣式 */
+        .info {
+            margin-top: 150px; /* 確保和 box 有足夠的距離 */
+            font-size: 20px;
+            text-align: center;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+
+        /* 新增操作教學框樣式 */
+        .instruction-box {
+            width: 120px; /* 設定框的寬度 */
+            height: 50px;
+            border: 2px solid purple; /* 边框样式 */
+            border-radius: 8px; /* 邊框圓角 */
+            background-color: purple; /* 背景顏色 */
+            margin: 20px auto; /* 垂直距離和居中 */
+            text-align: center; /* 文字居中 */
+            display: flex;
+            align-items: center;
+        }
+        
+    </style>
+    <body>
+        <div style="position: absolute; top: 10%; left: 0px;">
+            <img src="101.jpg" width="300" height="600" id="img_1"><br>
+
+        </div>
+        
+        <!-- 挑戰101 框 -->
+        <div class="box">
+            <p>挑戰101</p>
+        </div>
+
+        <!-- 目前進度和操作教學區塊 -->
+        <div class="info">
+            <p>目前進度: 0樓</p>
+            <div class="instruction-box">
+                <i class="fa-solid fa-play" style="color: white; padding: 5px;"></i>
+                <p style="color: white; font-weight: bolder;"> 直接開始 </p>
+            </div>
+            <p>請按我!</p>
+        </div>
+
+        <!-- 星星和進度顯示 -->
+        <div class="star-container">
+            <i class="fas fa-star"></i> <!-- 星星圖示 -->
+            <p>0/30</p> <!-- 後面的文字 -->
+        </div>
+        
+    </body>
+</html>
