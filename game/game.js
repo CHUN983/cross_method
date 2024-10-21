@@ -8,7 +8,7 @@ function updateTimer() {
     
     if (timeRemaining <= 0) {
         clearInterval(countdown); // 停止計時器
-        const choice = confirm('時間到💥！要回首頁還是重新開始？\n按確定回首頁，按取消重新開始。');
+        const choice = confirm('挑戰失敗💥！要回首頁還是重新開始？\n按確定回首頁，按取消重新開始。');
         if (choice) {
             goHome(); // 回到首頁
         } else {
