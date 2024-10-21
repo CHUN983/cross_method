@@ -91,7 +91,7 @@ body {
 /*for game -----------------------------------------------------------------*/
 /* game_container 的樣式 */
 .game_container {
-    width: 500px;
+    width: 600px;
     background-color: #ccc; /* 灰色背景 */
     padding: 20px;
     border-radius: 10px; /* 圓角 */
@@ -99,6 +99,11 @@ body {
     display: flex;
     justify-content: space-between; /* 左右分佈 */
     align-items: center;
+    
+    position: absolute; /* 使用絕對定位 */
+    top: 40%; /* 垂直置中 */
+    left: 50%; /* 水平置中 */
+    transform: translate(-50%, -50%); /* 使元素精確置中 */
 }
 
 /* display_number 的樣式 */
@@ -108,6 +113,7 @@ body {
     justify-content: space-between;
     width: 120px;
     font-size: 24px;
+    align-items: center;
 }
 
 .operation {
@@ -120,13 +126,23 @@ body {
 .operation-group {
     display: flex;
     align-items: center;
-    background-image: url('arrow.png');
-    background-size: contain; /* 自適應圖片大小 */
-    background-repeat: no-repeat;
-    background-position: center; /* 背景置中 */
-    padding: 0 30px; /* 增加左右的間距，讓箭頭有空間 */
-    position: relative;
-    height: 50px; /* 設定高度 */
+    padding: 10px 20px;
+    border: 2px solid #000; /* 外框 */
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+}
+
+.operation-icon {
+    margin-right: 10px; /* 調整符號與數字的距離 */
+    font-size: 24px;
+    color: #333;
+}
+
+.operation-number {
+    font-weight: bold;
+    font-size: 24px;
+    color: #333;
 }
 .operation-group span {
     font-weight: bold;
@@ -135,23 +151,44 @@ body {
 }
 
 
-/* input_number 的樣式 */
+/* 整體容器樣式 */
 .input_number {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 150px;
+    gap: 28px; /* 上下部分之間的間距 */
+    position: relative;
+    bottom: 10px;
 }
 
-.input_number button {
-    font-size: 20px;
-    width: 50px;
-    height: 50px;
-    margin: 5px;
-    background-color: white;
+/* 輸入區塊樣式 */
+.input-section {
+    text-align: center;
+}
+
+/* select 樣式 */
+.number-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
     border: 2px solid #000;
     border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    text-align: center;
+    appearance: none; /* 去除預設的下拉箭頭 */
 }
+
+/* 下拉箭頭圖標替代 */
+.number-select::after {
+    content: "\25BC"; /* 使用Unicode符號作為箭頭 */
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+}
+
+
 
 /* check 的樣式 */
 .check {

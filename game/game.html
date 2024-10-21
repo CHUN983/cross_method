@@ -3,55 +3,17 @@
         <title>挑戰101</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="game.css">
-        <script>
-            let countdown; // 用來儲存計時器的變數
-            let timeRemaining = 10; // 計時器的初始值（60秒）
-
-            function updateTimer() {
-                const timeDisplay = document.querySelector('.time'); // 獲取顯示時間的元素
-                timeDisplay.textContent = `倒數：${timeRemaining}秒`; // 更新顯示內容
-                
-                if (timeRemaining <= 0) {
-                    clearInterval(countdown); // 停止計時器
-                    const choice = confirm('時間到💥！要回首頁還是重新開始？\n按確定回首頁，按取消重新開始。');
-                    if (choice) {
-                        goHome(); // 回到首頁
-                    } else {
-                        restartTimer(); // 重新開始
-                    }
-                } else {
-                    timeRemaining--; // 減少剩餘時間
-                }
-            }
-
-            function startTimer() {
-                countdown = setInterval(updateTimer, 1000); // 每秒更新一次計時器
-            }
-
-            function goHome() {
-                clearInterval(countdown); // 在轉換頁面前停止計時器
-                window.location.href = '../start/main.html'; // 將當前窗口導向 main.html
-            }
-
-            function restartTimer() {
-                timeRemaining = 10; // 重設時間
-                startTimer(); // 重新啟動計時器
-            }
-
-            window.onload = function() {
-                startTimer(); // 頁面加載後啟動計時器
-            }
-        </script>
+        <script src="game.js"></script>
     </head>
 
     <body>
         <!-- 圓圈 level 固定左上角 -->
-        <div class="level">LV8</div>
+        <div class="level">LV0</div>
 
         <!-- 容器，包含 time、goal、suggestion、home -->
         <div class="container">
             <!-- time 顯示 -->
-            <div class="time">倒數：10秒</div>
+            <div class="time">倒數：60秒</div>
 
             <!-- goal 顯示 -->
             <div class="goal">
@@ -75,30 +37,63 @@
             <!-- 顯示的數字與運算符號 -->
             <div class="display_number">
                 <div class="operation">
-                    <!-- 將乘法符號與12包在一個標籤內 -->
+                    <!-- 將乘法符號與隨機生成的數字包在一個標籤內 -->
                     <div class="operation-group">
-                        <span>x</span> 
-                        <span>12</span>
+                        <span class="operation-icon">
+                            <i class="fa-solid fa-times"></i> <!-- 乘法icon -->
+                        </span> 
+                        <span class="operation-number operation-number1">12</span> <!-- 初始為 12，但會被隨機數字取代 -->
                     </div>
                 </div>
                 <div class="operation">
-                    <!-- 將加法符號與7包在一個標籤內 -->
+                    <!-- 將加法符號與隨機生成的數字包在一個標籤內 -->
                     <div class="operation-group">
-                        <span>+</span> 
-                        <span>7</span>
+                        <span class="operation-icon">
+                            <i class="fa-solid fa-plus"></i> <!-- 加法icon -->
+                        </span> 
+                        <span class="operation-number operation-number2">7</span> <!-- 初始為 7，但會被隨機數字取代 -->
                     </div>
                 </div>
             </div>
 
             <!-- 使用者輸入按鈕 0-9 -->
             <div class="input_number">
-
+                <!-- 上部分數字選擇 -->
+                <div class="input-section">
+                    <select class="number-select" id="number1" onchange="updateSelection('number1')">
+                        <option value="" disabled selected>請選擇</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                </div>
+                <!-- 下部分數字選擇 -->
+                <div class="input-section">
+                    <select class="number-select" id="number2" onchange="updateSelection('number2')">
+                        <option value="" disabled selected>請選擇</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                </div>
             </div>
 
             <!-- 確認按鈕 -->
-            <div class="check">
-                確認
-            </div>
+            <div class="check" onclick="checkSelection()">確認</div>
         </div>
 
     </body>
