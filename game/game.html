@@ -8,7 +8,7 @@
 
     <body>
         <!-- 圓圈 level 固定左上角 -->
-        <div class="level">LV0</div>
+        <div class="level" id="level-display">LV1</div>
 
         <!-- 容器，包含 time、goal、suggestion、home -->
         <div class="container">
@@ -17,11 +17,11 @@
 
             <!-- goal 顯示 -->
             <div class="goal">
-                <p>目標: 60秒內完成</p>
+                <p>目標: <span id="goal-time">60</span> 秒內完成</p>
             </div>
 
             <!-- hint 顯示 -->
-            <div class="hint">
+            <div class="hint" onclick="showHint()">
                 <i class="fa-solid fa-lightbulb"></i>
                 <p style="color: white; font-weight: bold;">提示</p>
             </div>

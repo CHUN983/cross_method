@@ -2,7 +2,6 @@
 //for time--------------------------------------------------------------------------------------------------------
 let countdown; // 用來儲存計時器的變數
 let timeRemaining = 60; // 計時器的初始值（60秒）
-
 function updateTimer() {
     const timeDisplay = document.querySelector('.time'); // 獲取顯示時間的元素
     timeDisplay.textContent = `倒數：${timeRemaining}秒`; // 更新顯示內容
@@ -38,6 +37,7 @@ function restartTimer() {
 
 //for generate number--------------------------------------------------------------------------------------------------------
 
+let hintNumber=0;
 // 將隨機數字插入到運算符號的旁邊
 function updateRandomNumbers() {
     // 取得要更新的數字元素
@@ -62,7 +62,16 @@ function updateRandomNumbers() {
     number1.textContent = num;
     number2.textContent = num/arr[subNum]+arr[subNum];
 
+    //保存提示數字
+    hintNumber = arr[subNum]
 }
+
+// 顯示提示
+function showHint() {
+    alert("提示: 請選擇數字 " + hintNumber);
+}
+
+
 
 // 網頁載入時更新數字
 window.onload = function() {
@@ -80,7 +89,10 @@ function updateSelection(id) {
 }
 
 // 檢查使用者選擇是否正確
+let errorCount=0;
+let level = 1; // 初始等級
 function checkSelection() {
+    
     const userNumber1 = parseInt(document.getElementById('number1').value); // 使用者選擇的第一個數字
     const userNumber2 = parseInt(document.getElementById('number2').value); // 使用者選擇的第二個數字
 
@@ -90,10 +102,23 @@ function checkSelection() {
     // 比對使用者選擇的數字是否正確
     if (userNumber1 + userNumber2 === displayNumber2 && userNumber1 * userNumber2 === displayNumber1) {
         alert("正確！重新生成數字！");
+        errorCount = 0;
+
+        // 更新等級，等級加 1
+        level++;
+        document.getElementById('level-display').textContent = "LV" + level; // 更新等級顯示
+
         updateRandomNumbers(); // 更新新的隨機數字
         resetSelections(); // 重置選擇
     } else {
-        alert("錯誤！請再試一次！");
+        if(errorCount === 1){
+            timeRemaining = 0;
+            level = 0;
+        }else{
+            alert("錯誤！請再試一次！");
+            errorCount++;
+        }
+
     }
 }
 
@@ -101,6 +126,20 @@ function checkSelection() {
 function resetSelections() {
     document.getElementById('number1').selectedIndex = 0; // 重置第一個選項
     document.getElementById('number2').selectedIndex = 0; // 重置第二個選項
-    restartTimer(); // 重新啟動計時器
+    if(level <= 10){
+        timeRemaining = 60;
+    }else if(level <= 30){
+        timeRemaining = 50;
+    }else if(level <= 50){
+        timeRemaining = 40;
+    }else if(level <= 70){
+        timeRemaining = 30;
+    }else{
+        timeRemaining = 20;
+    }
+
+    // 更新目標時間顯示
+    document.getElementById('goal-time').textContent = timeRemaining;
 }
+
 

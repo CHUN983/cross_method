@@ -57,6 +57,10 @@ body {
     padding: 10px; /* 內部填充，讓內容與邊框保持距離 */
     background-color: purple; /* 方框內的背景顏色 */
     margin-right: 20px; /* 保持右邊的距離 */
+    cursor: pointer;
+}
+.hint:hover {
+    background-color: darkviolet; /* 鼠標懸停時改變背景色 */
 }
 
 .hint i {
