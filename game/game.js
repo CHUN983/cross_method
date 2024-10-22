@@ -2,18 +2,15 @@
 //for time--------------------------------------------------------------------------------------------------------
 let countdown; // 用來儲存計時器的變數
 let timeRemaining = 60; // 計時器的初始值（60秒）
+let level = 1; // 初始等級
 function updateTimer() {
     const timeDisplay = document.querySelector('.time'); // 獲取顯示時間的元素
     timeDisplay.textContent = `倒數：${timeRemaining}秒`; // 更新顯示內容
     
     if (timeRemaining <= 0) {
         clearInterval(countdown); // 停止計時器
-        const choice = confirm('挑戰失敗💥！要回首頁還是重新開始？\n按確定回首頁，按取消重新開始。');
-        if (choice) {
-            goHome(); // 回到首頁
-        } else {
-            restartTimer(); // 重新開始
-        }
+        alert('挑戰失敗💥！即將回到首頁。'); 
+        goHome(); // 直接回到首頁
     } else {
         timeRemaining--; // 減少剩餘時間
     }
@@ -29,6 +26,8 @@ function goHome() {
 }
 
 function restartTimer() {
+    localStorage.clear(); // 清除數據以重新開始
+    level = 1;
     timeRemaining = 60; // 重設時間
     startTimer(); // 重新啟動計時器
 }
@@ -75,6 +74,17 @@ function showHint() {
 
 // 網頁載入時更新數字
 window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    level = urlParams.get('level') ? parseInt(urlParams.get('level'), 10) : 1;
+
+    console.log('目前等級:', level); // Debug 訊息
+
+    // 在這裡使用 level 進行遊戲初始化或其他操作
+    document.getElementById('level-display').textContent = "LV" + level;
+    resetSelections();
+    document.getElementById('current-time').textContent = timeRemaining +"秒";
+
+
     updateRandomNumbers();
     startTimer(); // 頁面加載後啟動計時器
 };
@@ -90,7 +100,6 @@ function updateSelection(id) {
 
 // 檢查使用者選擇是否正確
 let errorCount=0;
-let level = 1; // 初始等級
 function checkSelection() {
     
     const userNumber1 = parseInt(document.getElementById('number1').value); // 使用者選擇的第一個數字
@@ -107,6 +116,8 @@ function checkSelection() {
         // 更新等級，等級加 1
         level++;
         document.getElementById('level-display').textContent = "LV" + level; // 更新等級顯示
+        sessionStorage.setItem('level',level);
+        console.log('儲存到 localStorage 的 level:', sessionStorage.getItem('level')); // Debug 訊息
 
         updateRandomNumbers(); // 更新新的隨機數字
         resetSelections(); // 重置選擇
@@ -134,12 +145,18 @@ function resetSelections() {
         timeRemaining = 40;
     }else if(level <= 70){
         timeRemaining = 30;
-    }else{
+    }else if(level <= 100){
         timeRemaining = 20;
+    }else{
+        const choice = confirm('挑戰成功🎉！要回首頁還是重新開始？\n按確定回首頁，按取消重新開始。');
+        if (choice) {
+            goHome(); // 回到首頁
+        } else {
+            restartTimer(); // 重新開始
+        }
     }
 
     // 更新目標時間顯示
     document.getElementById('goal-time').textContent = timeRemaining;
 }
-
 
